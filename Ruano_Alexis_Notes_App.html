@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Today's Notes</title>
+
+  <!-- Vue.js 3 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=DM+Serif+Text&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffe6f0;
+      color: #333;
+      padding: 40px 20px;
+    }
+
+    .main-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-weight: 600;
+      color: #d63384;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .input-area {
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      border: 1px solid #f5c6da;
+    }
+
+    .btn-primary {
+      background-color: #d63384;
+      border-color: #d63384;
+    }
+
+    .btn-primary:hover {
+      background-color: #c62c76;
+      border-color: #c62c76;
+    }
+
+    .notes-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .notes-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .note-card {
+      background-color: #fff0f5;
+      border: 1px solid #f8d7e4;
+      border-radius: 10px;
+      padding: 16px;
+      position: relative;
+    }
+
+    .note-text {
+      font-family: 'DM Serif Text', serif;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .delete-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #c62c76;
+      color: white;
+      border: none;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 1;
+      padding: 4px 10px;
+      border-radius: 50%;
+      transition: background-color 0.2s;
+    }
+
+    .delete-button:hover {
+      background-color: #b42a6b;
+    }
+
+    .text-muted {
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="main-container">
+    <h1>Today's Notes</h1>
+
+    <!-- Input Section -->
+    <div class="input-area">
+      <div class="row g-2 align-items-center">
+        <div class="col-md-9">
+          <input
+            v-model="newNote"
+            @keyup.enter="addNote"
+            type="text"
+            class="form-control form-control"
+            placeholder="Type a note and press Enter or click Add"
+          />
+        </div>
+        <div class="col-md-3">
+          <button @click="addNote" class="btn btn-primary w-100">Add Note</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes Display -->
+    <div v-if="notes.length === 0" class="text-muted text-center mt-4">
+      No notes yet. Add your thoughts for today!
+    </div>
+
+    <div v-else class="notes-grid">
+      <div v-for="(note, index) in notes" :key="index" class="note-card">
+        <span class="note-text">{{ note }}</span>
+        <button @click="deleteNote(index)" class="delete-button">&times;</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          newNote: '',
+          notes: []
+        };
+      },
+      methods: {
+        addNote() {
+          const trimmedNote = this.newNote.trim();
+          if (trimmedNote) {
+            this.notes.push(trimmedNote);
+            this.newNote = '';
+          }
+        },
+        deleteNote(index) {
+          this.notes.splice(index, 1);
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
