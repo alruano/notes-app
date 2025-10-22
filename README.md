@@ -1,8 +1,21 @@
 # Notes App
 
-A simple Vue.js CDN-based notes app that lets users create, edit, and delete notes. Built as part of the course project.
+This is a simple Notes App built using Vue.js (via CDN). 
+
+## Features
+
+- Add new notes
+- Delete notes
 
 ## Technologies Used
 
 - HTML
-- Vue.js (via CDN)
+- CSS 
+- Vue.js
+
+## How to Run
+
+1. Clone or download the repository.
+2. Open `index.html` in your web browser.
+3. Start writing notes. 
+
